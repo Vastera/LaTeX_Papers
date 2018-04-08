@@ -1,24 +1,89 @@
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
+    // Author: EthanDENG
+    // Homepage: http://ddswhu.com/
+    // Last Update: 2017/11/01
+    // Latest Version: http://ddswhu.com/download/
+
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "XeLaTeX",
             "type": "shell",
-            "command": "msbuild",
+            "command": "xelatex",
             "args": [
-                // Ask msbuild to generate full paths for file names.
-                "/property:GenerateFullPaths=true",
-                "/t:build"
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "${file}"
             ],
-            "group": "build",
-            "presentation": {
-                // Reveal the output only if unrecognized errors occur.
-                "reveal": "silent"
-            },
-            // Use the standard MS compiler pattern to detect errors, warnings and infos
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "PDF Preview",
+            "type": "shell",
+            "command": "SumatraPDF -reuse-instance ${fileBasenameNoExtension}.pdf",
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "PDFLaTeX",
+            "type": "shell",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "${file}"
+            ],
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "BibTeX",
+            "type": "shell",
+            "command": "bibtex",
+            "args": [
+                "${fileBasenameNoExtension}.aux"
+            ],
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "LaTeX",
+            "type": "shell",
+            "command": "latex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "${file}"
+            ],
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "dvi2pdf",
+            "type": "shell",
+            "command": "dvipdfmx",
+            "args": [
+                "${fileBasenameNoExtension}.dvi"
+            ],
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "dvi2ps",
+            "type": "shell",
+            "command": "dvips",
+            "args": [
+                "${fileBasenameNoExtension}.dvi"
+            ],
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "ps2pdf",
+            "type": "shell",
+            "command": "ps2pdf",
+            "args": [
+                "${fileBasenameNoExtension}.ps"
+            ],
+            "problemMatcher": "$tsc-watch"
         }
     ]
 }
